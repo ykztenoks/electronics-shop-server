@@ -1,6 +1,7 @@
 import express from "express"
 import connectDB from "./db/connect.js"
 import morgan from "morgan"
+import cors from "cors"
 import errorHandler from "./middleware/errorHandler.js"
 import userRoutes from "./routes/user.routes.js"
 import productRoutes from "./routes/product.routes.js"
@@ -10,10 +11,13 @@ import "dotenv/config"
 const app = express()
 app.use(express.json())
 app.use(morgan("dev"))
+app.use(cors({ origin: [process.env.CLIENT_URL] }))
+
 //routes
 app.use("/user", userRoutes)
-app.use("/product", productRoutes)
+app.use("/products", productRoutes)
 app.use("/cart", cartRoutes)
+
 //error
 app.use(errorHandler)
 
